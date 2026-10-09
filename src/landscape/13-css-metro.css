@@ -1,0 +1,57 @@
+/* ===== Landscape — the Metro picture ===== */
+.ls-canvas svg.metro{background:var(--card)}
+.ls-canvas .metro .lbl{font-family:var(--dsp);font-weight:600;font-size:16px;fill:var(--ink);letter-spacing:0;text-transform:none}
+.ls-canvas .metro .lbl2{font-size:11.5px;fill:var(--muted)}
+.ls-canvas .metro .line path{fill:none;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;opacity:.9;transition:opacity .15s,stroke-width .15s}
+.ls-canvas .metro .line.dashed path{stroke-dasharray:14 9}
+.ls-canvas .metro .line.dotted path{stroke-dasharray:3 9}
+.ls-canvas .metro .line.faint path{opacity:.45}
+.ls-canvas .metro .line.on path{opacity:1;stroke-width:12}
+.ls-canvas.focus .metro .line:not(.on) path{opacity:.1}
+.ls-canvas .metro .line .n circle{fill:var(--surface);stroke-width:2.5}
+.ls-canvas .metro .line .n text{font-size:11px;font-weight:700;font-family:var(--mono);text-anchor:middle;dominant-baseline:central}
+.ls-canvas .metro .line{cursor:pointer}
+.ls-canvas .metro .floorline path{fill:none;stroke:var(--hair);stroke-width:14;stroke-linecap:round}
+.ls-canvas .metro .stn{cursor:pointer}
+.ls-canvas .metro .stn rect,.ls-canvas .metro .stn circle{fill:var(--surface);stroke:var(--ink);stroke-width:3}
+.ls-canvas .metro .stn.gate rect{stroke:var(--accent);stroke-width:3.5}
+.ls-canvas .metro .stn.gate .bar{stroke:var(--accent);stroke-width:2;fill:none;opacity:.7}
+.ls-canvas .metro .stn.xchg rect{stroke:var(--good);stroke-width:3.5;fill:var(--good-soft)}
+.ls-canvas .metro .stn.stn-crit circle{stroke:var(--crit)}
+.ls-canvas .metro .stn.tray rect{stroke:var(--warn);fill:var(--warn-soft)}
+.ls-canvas .metro .stn.ghost circle{stroke:var(--muted);stroke-dasharray:4 3;fill:transparent;stroke-width:2}
+.ls-canvas .metro .stn.floor circle{stroke:var(--muted);fill:var(--hair2)}
+.ls-canvas .metro .stn.pill-s circle{stroke:var(--ink)}
+.ls-canvas .metro .stn:hover rect,.ls-canvas .metro .stn.on rect,.ls-canvas .metro .stn:hover circle,.ls-canvas .metro .stn.on circle{stroke-width:5}
+.ls-canvas .metro .stn .sl{font-family:var(--dsp);font-weight:600;font-size:13.5px;fill:var(--ink)}
+.ls-canvas .metro .stn .ss{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+.ls-canvas .metro .stn .sf{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+.ls-canvas .metro .stn.ghost .sl{fill:var(--muted)}
+.ls-canvas .metro .stn.stn-crit .sl{fill:var(--crit)}
+.ls-canvas.focus .metro .stn:not(.on):not(.rel){opacity:.3}
+.ls-canvas .metro .live .lc{font-family:var(--dsp);font-weight:600;font-size:11.5px;fill:var(--ink)}
+.ls-canvas .metro .live .lc2{font-size:9.5px;fill:var(--muted);font-family:var(--mono)}
+.ls-canvas .metro .live .hp circle{fill:var(--good);stroke:var(--surface);stroke-width:1.5}
+.ls-canvas .metro .live .hp.warn circle{fill:var(--warn)} .ls-canvas .metro .live .hp.crit circle{fill:var(--crit)}
+.ls-canvas .metro .live .hp .ring{fill:none;stroke:currentColor;stroke-width:1.5;opacity:.6;animation:ls-ring 1.6s ease-out infinite}
+.ls-canvas .metro .live .hp.warn{color:var(--warn)} .ls-canvas .metro .live .hp.crit{color:var(--crit)}
+.ls-canvas .metro .live .hold circle{fill:var(--warn);stroke:var(--surface);stroke-width:2}
+.ls-canvas .metro .live .hold.crit circle{fill:var(--crit)}
+.ls-canvas .metro .live .hold text{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:central;font-family:var(--mono)}
+.ls-canvas .metro .live .dot:not(.client) circle{fill:currentColor}
+.ls-canvas .metro .live .dot circle{stroke:var(--surface);stroke-width:1.5}
+.ls-canvas .metro .live .dot:not(.client) .halo{fill:currentColor}
+.ls-canvas .metro .live .dot .halo{stroke:none;opacity:.18}
+.ls-canvas .metro .live .dot.bad circle{fill:var(--crit)} .ls-canvas .metro .live .dot.bad .halo{fill:var(--crit)}
+.ls-canvas .metro .live .asat text{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+.ls-canvas .metro .live .asat .pulse{fill:var(--good);animation:ls-pulse 1.4s ease-in-out infinite}
+.ls-canvas.focus .metro .live .dot{opacity:.25}
+.ls-pic{margin-right:10px}
+.ls-lines{display:flex;flex-direction:column}
+.ls-ls{display:flex;align-items:center;gap:9px;padding:7px 12px;border-bottom:1px solid var(--hair);font-size:12.5px;cursor:pointer}
+.ls-ls:last-child{border-bottom:none}
+.ls-ls:hover{background:var(--hair2)}
+.ls-ls .rn{width:20px;height:20px;border-radius:50%;border:2px solid;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:700;flex:none;background:var(--surface)}
+.ls-ls .nm{font-weight:600}
+.ls-ls .sp{flex:1}
+.ls-ls .cnt{font-size:11.5px;color:var(--muted);font-family:var(--mono)}

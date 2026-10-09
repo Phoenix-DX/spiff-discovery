@@ -1,0 +1,4 @@
+.DS_Store
+
+# Another team's benchmark output. Kept out so no ingest lane can pick it up.
+docs/competitor-report/

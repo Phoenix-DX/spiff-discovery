@@ -1,0 +1,124 @@
+<style>
+/* v2 layout overrides on the v1 shell */
+.view.wide{max-width:1340px}
+.view.full{max-width:none;padding:0;height:100%}
+.scroll.noscroll{overflow:hidden}
+.topbar .scopechip2{display:flex;align-items:center;gap:7px;background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;white-space:nowrap}
+.topbar .scopechip2 svg{width:13px;height:13px}
+.simbar{background:var(--warn);color:#fff;padding:7px 26px;font-size:12.5px;font-weight:600;display:none;align-items:center;gap:10px;flex:none}
+.simbar.on{display:flex}
+.simbar button{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:7px;padding:3px 10px;font-size:12px;font-weight:600}
+</style>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark" id="brandmark"></div>
+      <div class="brandtext"><div class="name">Spiff</div><div class="tag">Ask, don't hunt</div></div>
+      <button class="railtog" id="railtog" aria-expanded="true" aria-controls="nav" aria-label="Collapse menu" title="Collapse menu" onclick="railToggle()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/><path d="M9 6v12" opacity=".5"/></svg></button>
+    </div>
+    <div class="railtour" id="railtour" tabindex="0" aria-haspopup="dialog" aria-expanded="false" onclick="railTourToggle(event)">
+      <div class="railtour-h"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2.5l1.9 5.6 5.6 1.9-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9z"/><path d="M19 15l.9 2.1 2.1.9-2.1.9L19 21l-.9-2.1-2.1-.9 2.1-.9z" opacity=".7"/></svg><span class="nl">New here?</span></div>
+      <div class="railtour-pop" role="dialog" aria-label="New here?"><div class="rt-card">
+        <div class="rt-t">New here?</div>
+        <div class="rt-d">Two minutes. You end with one answer you own and follow, not a tour of the menus.</div>
+        <div class="rt-acts"><button class="btn pri sm" onclick="railTourClose();startOnboarding()">Show me how</button><button class="btn sm" onclick="railTourClose();go('glossary')">Read the definitions first</button></div>
+      </div></div>
+    </div>
+    <nav class="nav" id="nav">
+      <a data-view="home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V21H3z"/><path d="M9 21v-7h6v7"/></svg> <span class="nl">Home</span></a>
+      <a data-view="inbox"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13h4l2 3h4l2-3h4"/><path d="M4 13V7a2 2 0 012-2h12a2 2 0 012 2v6"/><path d="M4 13v4a2 2 0 002 2h12a2 2 0 002-2v-4"/></svg> <span class="nl">Inbox</span> <span class="count attn" id="inbox-count" title="Decisions waiting for you">0</span></a>
+      <a data-view="chat"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 01-11.6 7.1L3 21l1.9-6.4A8 8 0 1121 12z"/></svg> <span class="nl">Chats</span></a>
+
+      <div class="lbl">Data</div>
+      <a data-view="catalog"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg> <span class="nl">Data catalogue</span></a>
+      <a data-view="mcp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7V5a3 3 0 016 0v2"/><rect x="4" y="7" width="16" height="6" rx="2"/><path d="M12 13v4M9 21h6"/></svg> <span class="nl">Connectors</span><span class="count attn" id="mcp-count" title="Connectors that need attention" style="display:none">0</span></a>
+
+      <div class="lbl">Keep &amp; run</div>
+      <a data-view="workspace"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg> <span class="nl">Workspaces</span></a>
+      <a data-view="autos"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M10 6h4a3 3 0 013 3v5"/></svg> <span class="nl">Automations</span></a>
+
+      <div class="lbl">Govern</div>
+      <a data-view="people"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3.2"/><path d="M4 20c0-3.6 3.6-6 8-6s8 2.4 8 6"/></svg> <span class="nl">People &amp; access</span></a>
+      <a data-view="rules"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3.6V12c0 4.6-3.3 8.3-8 9-4.7-.7-8-4.4-8-9V6.6z"/><path d="M9.2 12.2l2 2 3.6-4"/></svg> <span class="nl">Business rules</span></a>
+      <a data-view="templates"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg> <span class="nl">Templates</span></a>
+      <a data-view="audit"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5M9 8h3"/></svg> <span class="nl">Activity log</span></a>
+      <a data-view="admin"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 13a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-2.7 1.1V21a2 2 0 01-4 0v-.2A1.6 1.6 0 006 19.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1A1.6 1.6 0 003 12.6H3a2 2 0 010-4h.2A1.6 1.6 0 004.7 6l-.1-.1a2 2 0 112.8-2.8l.1.1A1.6 1.6 0 0010 3.6V3a2 2 0 014 0v.2a1.6 1.6 0 002.7 1.1l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 001.1 2.7H21a2 2 0 010 4h-.2a1.6 1.6 0 00-1.4 1z"/></svg> <span class="nl">Set-up</span></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="user" id="userchip" title="Who Spiff runs as">
+      <div class="av">TS</div>
+      <div class="usertext"><div class="who">Thato S.</div><div class="scope">Your view · 12 of 312 localities</div></div>
+      <button class="thm" id="thm" title="Toggle theme">◑</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="simbar" id="simbar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span id="simbar-txt">Viewing as someone else</span>
+      <div class="sp" style="flex:1"></div>
+      <button onclick="stopSim()">Stop simulating</button>
+    </div>
+    <div class="topbar">
+      <div class="crumb" id="crumb"><b>Home</b></div>
+      <div class="search"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input placeholder="Search answers, datasets, people…" id="gsearch"></div>
+      <div class="scopechip2" id="topscope" title="Every answer re-runs as you: your view, never anyone else's"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3.6V12c0 4.6-3.3 8.3-8 9-4.7-.7-8-4.4-8-9V6.6z"/></svg> Your view</div>
+      <button class="btn pri" onclick="homeAskFocus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg> New question</button>
+    </div>
+    <div class="scroll">
+      <section class="view" id="view-answer"><div id="thread"></div>
+        <div class="composer"><div class="composer-in">
+          <textarea id="fu-in" rows="1" placeholder="Ask a follow-up, or refine this…"></textarea>
+          <button class="send" onclick="submitFollowup()" title="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div><div class="composer-hint">Spiff keeps the thread — follow-ups build on the answer above, scoped to you.</div></div>
+      </section>
+      <section class="view" id="view-workspace"></section>
+      <section class="view" id="view-library"></section>
+      <section class="view" id="view-autos"></section>
+      <section class="view" id="view-flow"></section>
+      <section class="view wide" id="view-admin"></section>
+      <section class="view wide" id="view-inbox"></section>
+
+      <section class="view wide" id="view-home"></section>
+      <section class="view full" id="view-chat"></section>
+      <section class="view wide" id="view-catalog"></section>
+      <section class="view wide" id="view-dataset"></section>
+      <section class="view wide" id="view-rules"></section>
+      <section class="view wide" id="view-templates"></section>
+      <section class="view wide" id="view-people"></section>
+      <section class="view wide" id="view-person"></section>
+      <section class="view wide" id="view-myaccess"></section>
+      <section class="view wide" id="view-mcp"></section>
+      <section class="view wide" id="view-connector"></section>
+      <section class="view wide" id="view-audit"></section>
+      <section class="view wide" id="view-landscape"></section>
+      <section class="view wide" id="view-glossary"></section>
+      <section class="view wide" id="view-sources"></section>
+      <section class="view wide" id="view-source"></section>
+      <section class="view wide" id="view-understand"></section>
+      <section class="view wide" id="view-sim"></section>
+    </div>
+  </div>
+</div>
+
+<button class="chandle" id="chandle" title="Chat history">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 01-11.6 7.1L3 21l1.9-6.4A8 8 0 1121 12z"/></svg>
+  <span class="chcount">16</span><span>Chats</span>
+</button>
+<aside class="cdrawer" id="cdrawer">
+  <div class="cd-head">
+    <div class="cd-title">Chat history</div>
+    <div class="seg2 cd-group" id="cd-group">
+      <button class="on" data-g="1" title="Auto-group by theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 21L15 12M13 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM18 9l.5 1.2L20 11l-1.5.6L18 13l-.5-1.2L16 11l1.5-.6z"/></svg></button>
+      <button data-g="0" title="Ungroup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2.4"/><path d="M12 3v3.4M12 17.6V21M3 12h3.4M17.6 12H21M5.6 5.6l2.4 2.4M15.9 15.9l2.5 2.5M18.4 5.6L16 8M8 16l-2.4 2.4"/></svg></button>
+    </div>
+    <button class="cd-close" id="cd-close" title="Collapse">›</button>
+  </div>
+  <div class="cd-search"><input id="cd-search" placeholder="Search chats…"></div>
+  <div class="cd-body" id="cd-body"></div>
+</aside>
+
+<div class="toast" id="toast"><span class="tk">✓</span><span id="toast-msg"></span></div>
+<div class="modal-bg" id="modal"></div>
+<div class="ovl" id="onboard"></div>
